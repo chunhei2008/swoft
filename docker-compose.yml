@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    swoft:
+        image: chunhei2008/php:swoft-http
+        ports: 
+            - 8080:18306
+        volumes: 
+            - .:/var/www/swoft
+        networks:
+            - swoft
+        depends_on:
+            - redis
+            - mysql
+    redis:
+        image: redis
+        ports:
+            - 63790:6379
+        networks:
+            - swoft
+    mysql:
+        image: mysql
+        ports:
+            - 33060:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+        networks:
+            - swoft
+
+networks:
+  swoft:
+    driver: bridge
